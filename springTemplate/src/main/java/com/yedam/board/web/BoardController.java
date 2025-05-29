@@ -10,6 +10,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.yedam.board.service.BoardService;
 import com.yedam.board.service.BoardVO;
+import com.yedam.board.service.Criteria;
+import com.yedam.board.service.PageDTO;
 
 import lombok.RequiredArgsConstructor;
 /**
@@ -31,9 +33,12 @@ public class BoardController {
 	 * @return 목록페이지명
 	 */
 	@GetMapping("/list")
-	public String getMethodName(Model model) {
-		model.addAttribute("list", boardService.getList());
-		return "board/list";
+	public void list(Criteria cri, Model model) {
+		model.addAttribute("list", boardService.getList(cri));
+		
+		//paing 처리
+				long total = boardService.getTotalCount(cri);
+				model.addAttribute("pageMaker", new PageDTO(cri, total));
 	}
 	
 	// 등록페이지로 이동
@@ -43,26 +48,27 @@ public class BoardController {
 	}
 	
 	// 등록 처리하고 목록으로 이동
-	@PostMapping("/register") // 등록
-	public String register(BoardVO board) {
-		boardService.insert(board);
+	@PostMapping("/register") 
+	public String register(BoardVO vo, RedirectAttributes rttr) {
+		boardService.insert(vo);
+		rttr.addFlashAttribute("result", vo.getBno());
 		return "redirect:list";
 	}
 	
 	// 단건 조회
 	@GetMapping("/get") 
-	public void get(@RequestParam("bno") int bno, Model model) {
+	public void get(@RequestParam("bno") Long bno, Model model) {
 		model.addAttribute("board", boardService.findById(bno));
 	}
 	
 	// 수정페이지로 이동
 	@GetMapping("/modify") 
-	public void modify(@RequestParam("bno") int bno, Model model) {
+	public void modify(@RequestParam("bno") Long bno, Model model) {
 		model.addAttribute("board", boardService.findById(bno));
 	}
 	
 	// 수정처리
-	@PostMapping("/modify") // 등록
+	@PostMapping("/modify") 
 	public String modify(BoardVO board, RedirectAttributes rttr) {
 		boardService.update(board);
 		// return "redirect:list";
@@ -71,8 +77,8 @@ public class BoardController {
 	}
 	
 	// 삭제처리
-	@PostMapping("/remove") // 등록
-	public String remove(@RequestParam("bno") int bno) {
+	@PostMapping("/remove") 
+	public String remove(@RequestParam("bno") Long bno) {
 		boardService.delete(bno);
 		return "redirect:list"; // 상대경로
 	}

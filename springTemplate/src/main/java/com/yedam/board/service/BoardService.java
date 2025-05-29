@@ -2,12 +2,12 @@ package com.yedam.board.service;
 
 import java.util.List;
 
-import com.yedam.board.service.BoardVO;
-
 public interface BoardService {
-	public List<BoardVO> getList();
+	public List<BoardVO> getList(Criteria cri);
+	public long getTotalCount(Criteria cri); 
 	public int insert(BoardVO vo);
-	public BoardVO findById(int bno);
-	public int delete(int bno);
+	public BoardVO findById(long bno);
+	public int delete(long bno);
 	public int update(BoardVO vo);
+	
 }

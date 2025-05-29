@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.yedam.board.mapper.BoardMapper;
 import com.yedam.board.service.BoardService;
 import com.yedam.board.service.BoardVO;
+import com.yedam.board.service.Criteria;
 
 import lombok.RequiredArgsConstructor;
 
@@ -17,8 +18,8 @@ public class BoardServiceImpl implements BoardService{
 	final BoardMapper boardMapper;
 	
 	@Override
-	public List<BoardVO> getList() {
-		return boardMapper.getList();
+	public List<BoardVO> getList(Criteria cri) {
+		return boardMapper.getList(cri);
 	}
 
 	@Override
@@ -27,18 +28,23 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public BoardVO findById(int bno) {
+	public BoardVO findById(long bno) {
 		return boardMapper.findById(bno);
 	}
 
 	@Override
-	public int delete(int bno) {
+	public int delete(long bno) {
 		return boardMapper.delete(bno);
 	}
 
 	@Override
 	public int update(BoardVO board) {
 		return boardMapper.update(board);
+	}
+
+	@Override
+	public long getTotalCount(Criteria cri) {
+		return boardMapper.getTotalCount(cri);
 	}
 
 }
