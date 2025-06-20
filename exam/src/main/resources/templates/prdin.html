@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+.salgrater {
+	color: red;
+}
+</style>
+</head>
+<body>
+	<section layout:fragment="content">
+		<div th:replace="~{header}"></div>
+		<h1>상품 등록</h1>
+		<form action="/register" method="post">
+		<div>
+			<label>상품ID</label> <input type="text" id="prdId" name="productId">
+		</div>
+
+		<div>
+			<label>이름</label> <input type="text" id="prdId" name="productName">
+		</div>
+
+		<div>
+			<label>단가</label> <input type="text" id="prdId" name="productPrice">
+		</div>
+
+		<div>
+			<label>상품정보</label> <input type="text" id="prdId" name="productInfo">
+		</div>
+
+		<div>
+			<label>등록일자</label> <input type="text" id="prdId" name="ProductDate">
+		</div>
+
+		<div>
+			<label>공급업체</label> <input type="text" id="prdId" name="company">
+		</div>
+
+		<div>
+			<label>담당자</label> <input type="text" id="prdId" name="managerId">
+		</div>
+		
+		<button>등록</button>
+		<button>조회</button>
+		</form>
+	</section>
+</body>
+</html>
